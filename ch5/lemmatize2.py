@@ -1,5 +1,4 @@
 import nltk
-import string
 
 from nltk import word_tokenize
 from nltk.stem import PorterStemmer
@@ -7,49 +6,71 @@ from nltk.stem.wordnet import WordNetLemmatizer
 from nltk import pos_tag
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 
+wordnet_tags = ['n', 'v']
 corpus = ['He ate the sandwiches', 'Every sandwich was eaten by him']
 
 vectorizer = CountVectorizer(binary=True, stop_words='english')
 
-stemmer = PorterStemmer()
-
-def stem_tokens(tokens, stemmer):
-	stemmed = []
-	for item in tokens:
-		stemmed.append(stemmer.stem(item))
-	return stemmed
-
-def StemTokenizer(text):
-	tokens = nltk.word_tokenize(text)
-	stems = stem_tokens(tokens, stemmer)
-	print stems
-	return stems
-
-lemmatizer = WordNetLemmatizer()
-tagged_corpus = [pos_tag(word_tokenize(document)) for document in corpus]
-
 def lemmatize(token, tag):
-	if tag[0].lower() in ['n','v']:
+	if tag[0].lower() in ['n', 'v']:
 		return lemmatizer.lemmatize(token, tag[0].lower())
 	return token
 
-token=[]
-token1=[]
-def LemmaTokenizer(text):
-	tokens = nltk.word_tokenize(text)
-	i=0
+#lemma = WordNetLemmatizer()
+lemmatizer = WordNetLemmatizer()
+tagged_corpus = [pos_tag(word_tokenize(document)) for document in corpus]
 
+#print tagged_corpus
+
+def lemmatize(token, tag):
+	#print "lemmatizeinit"
+	if tag[0].lower() in ['n', 'v']:
+		#print lemmatizer.lemmatize(token, tag[0].lower())
+		return lemmatizer.lemmatize(token, tag[0].lower())
+	return token
+
+def LemmaTokenizer(text):
+	#print text
+	#print "lemmatizerinit"
+	lem=[]
+	tagged_corpus = [pos_tag(word_tokenize(document)) for document in corpus]
+	print tagged_corpus
 	for document in tagged_corpus:
 		for token, tag in document:
-			token[i] = str(lemmatize(token, tag))
-			#token.append(lemmatize(token, tag))
-			print token
-#	print token1.append(token)
-	return tokens
+			lem.append(lemmatize(token, tag))
+	#print lem
+	return lem
+	#print(lem)
 
 
+'''
+def lemma_tokens(tokens, lemma):
+	lem = []
+	#print tokens
+	#print lemma
+	for item in tokens:
+		#if tag[0].lower() in ['n', 'v']:
+			#print tag[0].lower()
+		#lem.append(lemma.lemmatize(item,tag[0].lower()))
+		lem.append(lemma.lemmatize(item,'v'))
 
-#vectorizer = TfidfVectorizer(stop_words='english', tokenizer=StemTokenizer, norm=None, smooth_idf=False)
+	#print 'lem:',[lem]
+	return lem
+
+def LemmaTokenizer(text):
+	tokens = nltk.word_tokenize(text)
+	print lemma
+	lems = lemma_tokens(tokens, lemma)
+	return lems
+
+def LemmaTokenizer(text):
+	tokens = nltk.word_tokenize(text)
+	print tokens
+	
+	for document in tagged_corpus:
+		for token, tag in document:
+			lemmatize(token,tag)
+'''
 vectorizer = TfidfVectorizer(stop_words='english', tokenizer=LemmaTokenizer, norm=None, smooth_idf=False)
 vectors = vectorizer.fit_transform(corpus)
 

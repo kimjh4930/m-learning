@@ -25,32 +25,14 @@ def StemTokenizer(text):
 	print stems
 	return stems
 
-lemmatizer = WordNetLemmatizer()
-tagged_corpus = [pos_tag(word_tokenize(document)) for document in corpus]
-
-def lemmatize(token, tag):
-	if tag[0].lower() in ['n','v']:
-		return lemmatizer.lemmatize(token, tag[0].lower())
-	return token
-
-token=[]
-token1=[]
-def LemmaTokenizer(text):
-	tokens = nltk.word_tokenize(text)
-	i=0
-
-	for document in tagged_corpus:
-		for token, tag in document:
-			token[i] = str(lemmatize(token, tag))
-			#token.append(lemmatize(token, tag))
-			print token
-#	print token1.append(token)
-	return tokens
-
-
+class LemmaTokenize(object):
+	def __init__(self):
+		self.wnl = WordNetLemmatizer()
+	def __call__(self, doc):
+		return [self.wnl.lemmatize(t) for t in word_tokenize(doc)]
 
 #vectorizer = TfidfVectorizer(stop_words='english', tokenizer=StemTokenizer, norm=None, smooth_idf=False)
-vectorizer = TfidfVectorizer(stop_words='english', tokenizer=LemmaTokenizer, norm=None, smooth_idf=False)
+vectorizer = TfidfVectorizer(stop_words='english', tokenizer=LemmaTokenize(), norm=None, smooth_idf=False)
 vectors = vectorizer.fit_transform(corpus)
 
 

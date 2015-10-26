@@ -4,6 +4,7 @@ import numpy as np
 from sklearn.cluster import MeanShift, estimate_bandwidth
 from itertools import cycle
 from sklearn.metrics import accuracy_score
+from itertools import cycle
 
 data = np.genfromtxt("data.txt",usecols=(0,1,2,3,4,5,6))
 result = np.genfromtxt("data.txt", usecols=7)
@@ -26,13 +27,13 @@ print ms.fit(data)
 
 labels = ms.fit_predict(data)
 
-for i in range(0, len(labels)):
-	if labels[i] == 0 :
-		labels[i] = 3
-	elif labels[i] == 1 :
-		labels[i] = 1
-	else:
-		labels[i] = 2
+#for i in range(0, len(labels)):
+#	if labels[i] == 0 :
+#		labels[i] = 3
+#	elif labels[i] == 1 :
+#		labels[i] = 1
+#	else:
+#		labels[i] = 2
 
 print ("labels : ",labels)
 
@@ -51,3 +52,17 @@ print("number of estimate cluster : %d"% n_clusters_)
 #accuracy
 accuracy = accuracy_score(result, labels)
 print("accuracy : %f"% accuracy)
+
+plt.figure(1)
+plt.clf()
+
+colors = cycle('bgrcmykbgrcmykbgrcmykbgrcmyk')
+for k, col in zip(range(n_clusters_), colors):
+	my_members = labels == k
+	cluster_center = cluster_centers[k]
+	plt.plot(data[my_members, 0], data[my_members, 1], col + '.')
+	plt.plot(cluster_center[0], cluster_center[1], 'o', markerfacecolor=col, markeredgecolor='k', markersize=14)
+
+
+plt.show()
+

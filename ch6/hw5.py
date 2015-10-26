@@ -15,7 +15,7 @@ index = [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9]
 
 for i in range(0,len(index)) :
 	print("quantile : %f"%index[i])
-	bandwidth = estimate_bandwidth(data, quantile=index[2], n_samples=len(data))
+	bandwidth = estimate_bandwidth(data, quantile=index[3], n_samples=len(data))
 
 	print ("bandwidth : %f"% bandwidth)
 
@@ -26,11 +26,11 @@ for i in range(0,len(index)) :
 
 	labels = ms.fit_predict(data)
 
-	for i in range(0, len(labels)):
-		if labels[i] == 0 :
-			labels[i] = 1
-		else :
-			labels[i] = 2
+#	for i in range(0, len(labels)):
+#		if labels[i] == 0 :
+#			labels[i] = 1
+#		else :
+#			labels[i] = 2
 	
 	print ("labels : ",labels)
 
@@ -48,3 +48,16 @@ for i in range(0,len(index)) :
 	accuracy = accuracy_score(result, labels)
 	print("accuracy : %f"% accuracy)
 	print" "
+
+
+plt.figure(1)
+plt.clf()
+
+colors = cycle('bgrcmykbgrcmykbgrcmykbgrcmyk')
+for k, col in zip(range(n_clusters_), colors):
+	my_members = labels == k
+	cluster_center = cluster_centers[k]
+	plt.plot(data[my_members, 0], data[my_members, 1], col + '.')
+	plt.plot(cluster_center[0], cluster_center[1], 'o', markerfacecolor=col, markeredgecolor='k', markersize=14)
+	
+plt.show()

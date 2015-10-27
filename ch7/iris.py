@@ -15,6 +15,8 @@ red_x, red_y = [],[]
 blue_x, blue_y = [],[]
 green_x, green_y = [],[]
 
+print(pca.explained_variance_ratio_)
+
 for i in range(len(reduced_x)):
 	if y[i] == 0:
 		red_x.append(reduced_x[i][0])

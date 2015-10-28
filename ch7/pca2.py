@@ -8,10 +8,14 @@ mean_x = np.mean(X, axis=0)
 
 #print(np.cov(X.T))
 
+X1 = X-mean_x
 
 for i in range(0, len(X)):
 	X[i][0] = X[i][0]-mean_x[0]
 	X[i][1] = X[i][1]-mean_x[1]
+
+print X1
+print X
 
 cov = np.cov(X.T)
 #print cov

@@ -12,7 +12,9 @@ mean = np.mean(x, axis=0)
 
 pca = PCA(n_components=2)
 result = pca.fit_transform(x)
+print pca.components_
 
+print pca.explained_variance_ratio_
 print result
 
 red_x, red_y = [],[]
@@ -38,3 +40,4 @@ plt.scatter(blue_x, blue_y, c='b', marker='o')
 plt.scatter(green_x, green_y, c='g', marker='.')
 
 plt.show()
+

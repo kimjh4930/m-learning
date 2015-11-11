@@ -14,15 +14,15 @@ pca = PCA(n_components=2)
 result = pca.fit_transform(x)
 print pca.components_
 
-print pca.explained_variance_ratio_
-print result
+#print pca.explained_variance_ratio_
+#print result
 
 red_x, red_y = [],[]
 blue_x, blue_y = [],[]
 green_x, green_y = [],[]
 
-print len(result)
-print len(y)
+#print len(result)
+#print len(y)
 
 for i in range(len(result)) :
 	if y[i] == 0:

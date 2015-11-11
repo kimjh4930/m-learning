@@ -25,14 +25,14 @@ w[big_1] = -maxint-2
 big_2 = np.argmax(w)
 
 eig_matrix = np.array([v[big_1], v[big_2]])
-print eig_matrix
+#print eig_matrix
 
 v = v.T
 print v
 
 result = np.array([np.dot(v[big_1], x.T), np.dot(v[big_2], x.T)]).T
 
-print result
+#print result
 #'w' is eigenvalue
 #'v' is eigenvector
 

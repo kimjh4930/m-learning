@@ -15,7 +15,7 @@ index = [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9]
 
 for i in range(0,len(index)) :
 	print("quantile : %f"%index[i])
-	bandwidth = estimate_bandwidth(data, quantile=index[3], n_samples=len(data))
+	bandwidth = estimate_bandwidth(data, quantile=index[1], n_samples=len(data))
 
 	print ("bandwidth : %f"% bandwidth)
 

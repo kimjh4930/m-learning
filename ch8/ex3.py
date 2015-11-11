@@ -7,6 +7,8 @@ from sklearn import linear_model, datasets
 n_samples = 1000
 n_outliers = 50
 
+threshold = 50
+
 
 X, y, coef = datasets.make_regression(n_samples=n_samples, n_features=1,n_informative=1, noise=10,coef=True, random_state=0)
 
@@ -20,11 +22,13 @@ model = linear_model.LinearRegression()
 model.fit(X, y)
 
 # Robustly fit linear model with RANSAC algorithm
-model_ransac = linear_model.RANSACRegressor(base_estimator=linear_model.LinearRegression(), residual_threshold=100)
+model_ransac = linear_model.RANSACRegressor(base_estimator=linear_model.LinearRegression(), residual_threshold=threshold)
 print model_ransac
 model_ransac.fit(X, y)
 inlier_mask = model_ransac.inlier_mask_
 outlier_mask = np.logical_not(inlier_mask)
+
+print inlier_mask
 
 # Predict data of estimated models
 line_X = np.arange(-5, 5)

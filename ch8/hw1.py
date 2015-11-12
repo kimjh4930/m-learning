@@ -10,24 +10,23 @@ result = np.genfromtxt("data.txt", usecols=(8))
 model = LinearRegression()
 model.fit(data, result)
 
-#print(model.predict(data))
+print len(data)
 
-model_ransac=linear_model.RANSACRegressor(base_estimator=linear_model.LinearRegression(), residual_threshold=20)
+print "LinearRegression"
+print("coef")
+for i in range(0,8):
+	print model.coef_[i]
+print("intercept : %f"%model.intercept_)
+
+model_ransac=linear_model.RANSACRegressor(base_estimator=linear_model.LinearRegression())
+print model_ransac
 model_ransac.fit(data, result)
-inlier_mask = model_ransac.inlier_mask_
-outlier_mask = np.logical_not(inlier_mask)
 
-line_X = np.arange(-5,5)
-line_y = model.predict(line_X)
+print " "
+print "RANSAC LinearRegression"
+print "coef"
+for i in range(0,8):
+	print model_ransac.estimator_.coef_[i]
+print("intercept : %f"%model_ransac.estimator_.intercept_)
 
 
-#plt.figure()
-#plt.plot(data, result, '-g')
-#plt.plot(data, model.predict(data), '-k', label='linear regressor')
-#plt.plot(data, model_ransac.predict(data), '-r', label='RANSAC regressor')
-
-#plt.legend(loc='upper left')
-#plt.show()
-
-#print data
-#print result

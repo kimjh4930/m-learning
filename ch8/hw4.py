@@ -23,16 +23,26 @@ for j in range(0, len(result)) :
 
 MAD = result_/len(result)
 
-print("MAD : %f"%MAD)
+print(MAD)
 
-for index in range(1, 100):
-	threshold = index
+for index in range(1, 10):
+	threshold = index*20
 
-	model_ransac = linear_model.RANSACRegressor(base_estimator=linear_model.LinearRegression(),
-																							residual_threshold=3*MAD)
+	model = LinearRegression()
+	model.fit(data, result)
+
+	model_ransac = linear_model.RANSACRegressor(base_estimator=linear_model.LinearRegression(),max_trials = threshold,residual_threshold = MAD)
+#	print model_ransac
+	
 	model_ransac.fit(data,result)
 	inliner_mask = model_ransac.inlier_mask_
 	outlier_mask = np.logical_not(inliner_mask)
+
+	print("max_trials : %d"%threshold)
+	print "coef"
+	for i in range(0,8):
+		print model_ransac.estimator_.coef_[i]
+	print("intercept : %f"%model_ransac.estimator_.intercept_)
 
 	true_count=0
 	false_count=0
@@ -42,18 +52,8 @@ for index in range(1, 100):
 			true_count += 1
 		else : 
 			false_count += 1
-	if threshold < MAD :
-		print("threshold : %d "%threshold),
-		print("true_count : %d "%true_count),
-		print("false_count : %d"%false_count)
 	result_x.append(index)
 	result_y.append(true_count)
 
 plt.plot(result_x, result_y, 'bo')
 plt.show()
-
-#print model_ransac.estimator_.coef_
-
-#residual = result - model.predict(data)
-#print residual
-

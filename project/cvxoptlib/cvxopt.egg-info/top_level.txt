@@ -1,0 +1,8 @@
+cvxopt
+lapack
+blas
+umfpack
+amd
+cholmod
+base
+misc_solvers
